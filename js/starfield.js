@@ -1,0 +1,68 @@
+"use strict";
+
+class Starfield {
+
+	constructor(w, h, n) {
+		this.stars = [];
+		this.numStars = n;
+		this.w = w;
+		this.h = h;
+		this.starSize = 2;
+		this.starSpeed = 2;
+
+		for (let i=0; i<n; i++) {
+			this.makeNewStar(true);
+		}
+	}
+
+	makeNewStar(first) {
+		let w = random(-this.w/2, this.w/2);
+		let s = random(this.starSize/2.0, this.starSize);
+		let ss = random(this.starSpeed/2.0, this.starSpeed);
+
+		if (first) {
+			this.stars.push(new Star(w, random(-this.h/2, this.h/2), s, ss));
+		} else {
+			this.stars.push(new Star(w, this.h/2 + this.starSize, s, ss));		
+		}
+	}
+
+	run() {
+		for (let i=0; i<this.stars.length; i++) {
+			this.stars[i].run();
+		}
+
+		for (let i=0; i<this.stars.length; i++) {
+			if (this.stars[i].pos.y < -this.h/2 - this.starSize) {
+				this.stars.splice(i, 1);
+				this.makeNewStar(false);
+			}
+		}
+	}
+
+}
+
+
+class Star {
+
+	constructor(w, h, s, ss) {
+		this.pos = createVector(w, h);
+		this.starSize = s;
+		this.starSpeed = ss;
+	}
+	update() {
+		this.pos.y -= this.starSpeed;
+	}
+
+	draw() {
+		pg.stroke(255);
+		pg.strokeWeight(this.starSize);
+		pg.point(this.pos.x, this.pos.y);
+	}
+
+	run() {
+		this.update();
+		this.draw();
+	}
+
+}

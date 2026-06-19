@@ -25,12 +25,15 @@ function setup() {
     pg = createGraphics(sW, sH, WEBGL);
     pg.pixelDensity(1);
     pg.noStroke();
+
+    bg = new Starfield(sW, sH, 100);
 }
 
 
 
 function draw() {
-    pg.background(255);
+    pg.background(127);
+    bg.run();
 
 
     image(pg, 0, 0, width, height);
