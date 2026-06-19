@@ -2,14 +2,15 @@
 
 class Starfield {
 
-	constructor(n) {
+	constructor() {
 		this.stars = [];
-		this.w = pg.width/2;
-		this.h = pg.height/2;
+		this.w = sW/2;
+		this.h = sH/2;
 		this.starSize = 2;
 		this.starSpeed = 2;
+		this.numStars = 100;
 
-		for (let i=0; i<n; i++) {
+		for (let i=0; i<this.numStars; i++) {
 			this.makeNewStar(true);
 		}
 	}
@@ -27,7 +28,7 @@ class Starfield {
 	}
 
 	run() {
-	    pg.background(127);
+	    pg.background(0);
 	
 		for (let i=0; i<this.stars.length; i++) {
 			this.stars[i].run();

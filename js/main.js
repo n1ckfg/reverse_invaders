@@ -38,13 +38,15 @@ function setup() {
 
     cursor = new Cursor();
 
-    bg = new Starfield(100);
+    bg = new Starfield();
     enemies.push(new Enemy(0, enemyHeight));
 }
 
 
 
 function draw() {
+    let bulletsCount = 0;
+
     t = millis();
     cursor.update();
 
@@ -57,15 +59,22 @@ function draw() {
 
     for (let i=0; i<enemies.length; i++) {
         enemies[i].run();
+        bulletsCount += enemies[i].bullets.length;
     }
 
     for (let i=0; i<aliens.length; i++) {
         aliens[i].run();
     }
 
+    for (let i=0; i<aliens.length; i++) {
+        if (!aliens[i].alive) aliens.splice(i, 1);
+    }
+
     cursor.draw();
 
     image(pg, 0, 0, width, height);
+
+    console.log("Aliens: " + aliens.length + "   Enemies: " + enemies.length + "   Bullets: " + bulletsCount);
 }
 
 function windowResized() {
@@ -76,7 +85,9 @@ function windowResized() {
 }
 
 function keyPressed() {
-
+    if (keyCode == LEFT_ARROW) {
+        console.log("!!!");
+    }
 }
 
 function mouseMoved() {

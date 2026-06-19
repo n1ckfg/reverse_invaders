@@ -1,14 +1,17 @@
 class Bullet {
 
-	constructor(x, y, s, ss) {
-		this.bulletSize = s;
-		this.bulletSpeed = ss;
+	constructor(x, y) {
+		this.bulletSize = 10;
+		this.bulletSpeed = 1;
+		this.bulletSpeedDelta = 0.05;
 		this.pos = createVector(x - this.bulletSize/2.0, y);
+		this.alive = true;
 	}
 
 	update() {
 		this.pos.y += this.bulletSpeed;
-		this.bulletSpeed += 0.8;
+		this.bulletSpeed += this.bulletSpeedDelta;
+		if (this.pos.y > sH) this.alive = false;
 	}
 
 	draw() {

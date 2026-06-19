@@ -12,8 +12,13 @@ class Cursor {
 
 	draw() {
 		pg.noFill();
-		pg.strokeWeight(1);
-		pg.stroke(255);
+		if (mouseIsPressed) {
+			pg.strokeWeight(2);
+			pg.stroke(255, 127, 0);
+		} else {
+			pg.strokeWeight(1);
+			pg.stroke(255);
+		}
 		pg.push();
 		pg.translate(this.pos.x, this.pos.y);
 		pg.line(-this.cursorSize, 0, this.cursorSize, 0);

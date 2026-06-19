@@ -1,14 +1,23 @@
 class Alien {
 
 	constructor(x, y) {
+		this.w = sW/2;
+		this.h = sH/2;
+		//this.origPosY = y;
+		//this.startPosY = y - 300;
 		this.pos = createVector(x, y);
+		this.target = createVector(x, y);
+
 		this.alienSize = 20;
 		this.alienSpeed = 2;
+		this.alive = true;
+		this.player = true;
 	}
 
 	update() {
 		this.pos.x += sin(t/random(2.0)) * random(1.0, 2.0);
 		this.pos.y -= this.alienSpeed;
+		if (this.pos.y < -this.w - this.alienSize) this.alive = false;
 	}
 
 	draw() {
