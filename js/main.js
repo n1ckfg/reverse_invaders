@@ -5,7 +5,8 @@ let sH = 480;
 let fps = 60;
 let scaleFactor = 1;
 let pg;
-let bg;
+
+let bg, enemy;
 
 function preload() {
     //shader = loadShader('shaders/basic.vert', 'shaders/effect.frag');
@@ -26,15 +27,15 @@ function setup() {
     pg.pixelDensity(1);
     pg.noStroke();
 
-    bg = new Starfield(sW, sH, 100);
+    bg = new Starfield(100);
+    enemy = new Enemy(0, -pg.height/2.5);
 }
 
 
 
 function draw() {
-    pg.background(127);
     bg.run();
-
+    enemy.run();
 
     image(pg, 0, 0, width, height);
 }

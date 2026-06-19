@@ -2,11 +2,10 @@
 
 class Starfield {
 
-	constructor(w, h, n) {
+	constructor(n) {
 		this.stars = [];
-		this.numStars = n;
-		this.w = w;
-		this.h = h;
+		this.w = pg.width/2;
+		this.h = pg.height/2;
 		this.starSize = 2;
 		this.starSpeed = 2;
 
@@ -16,24 +15,26 @@ class Starfield {
 	}
 
 	makeNewStar(first) {
-		let w = random(-this.w/2, this.w/2);
+		let w = random(-this.w, this.w);
 		let s = random(this.starSize/2.0, this.starSize);
 		let ss = random(this.starSpeed/2.0, this.starSpeed);
 
 		if (first) {
-			this.stars.push(new Star(w, random(-this.h/2, this.h/2), s, ss));
+			this.stars.push(new Star(w, random(-this.h, this.h), s, ss));
 		} else {
-			this.stars.push(new Star(w, this.h/2 + this.starSize, s, ss));		
+			this.stars.push(new Star(w, this.h + this.starSize, s, ss));		
 		}
 	}
 
 	run() {
+	    pg.background(127);
+	
 		for (let i=0; i<this.stars.length; i++) {
 			this.stars[i].run();
 		}
 
 		for (let i=0; i<this.stars.length; i++) {
-			if (this.stars[i].pos.y < -this.h/2 - this.starSize) {
+			if (this.stars[i].pos.y < -this.h - this.starSize) {
 				this.stars.splice(i, 1);
 				this.makeNewStar(false);
 			}
