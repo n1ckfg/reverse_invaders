@@ -3,6 +3,7 @@ class Enemy {
 	constructor(x, y) {
 		this.w = pg.width/2;
 		this.h = pg.height/2;
+		this.origPosY = y;
 		this.pos = createVector(x, y);
 		this.target = createVector(x, y);
 		this.ease = 0.1;
@@ -10,6 +11,7 @@ class Enemy {
 	}
 
 	update() {
+		this.pos.y += sin(t/random(2.0)) * random(1.0, 2.0);
 		this.pos.lerp(this.target, this.ease);
 		if (this.pos.dist(this.target) < 1.0) {
 			this.initTarget();
@@ -25,7 +27,7 @@ class Enemy {
 		pg.strokeWeight(1);
 		pg.stroke(0, 255, 0);
 		pg.push();
-		pg.translate(this.pos.x, this.pos.y,);
+		pg.translate(this.pos.x, this.pos.y);
 		pg.scale(0.5);
 		pg.fill(127, 255, 127);
 		pg.triangle(-20, -25, 0, 60, 20, -25);
@@ -40,7 +42,7 @@ class Enemy {
 	}
 
 	initTarget() {
-		this.target = createVector(random(-this.w, this.w), this.pos.y);
+		this.target = createVector(random(-this.w, this.w), this.origPosY);
 	}
 
 	fireBullet() {

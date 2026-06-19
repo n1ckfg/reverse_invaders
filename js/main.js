@@ -15,6 +15,7 @@ let enemies = [];
 let enemySpawnedLast = 0;
 let aliens = [];
 let cursor;
+let t;
 
 function preload() {
     //shader = loadShader('shaders/basic.vert', 'shaders/effect.frag');
@@ -44,7 +45,8 @@ function setup() {
 
 
 function draw() {
-    const t = millis();
+    t = millis();
+    cursor.update();
 
     bg.run();
     
@@ -57,7 +59,11 @@ function draw() {
         enemies[i].run();
     }
 
-    cursor.run();
+    for (let i=0; i<aliens.length; i++) {
+        aliens[i].run();
+    }
+
+    cursor.draw();
 
     image(pg, 0, 0, width, height);
 }
@@ -78,5 +84,5 @@ function mouseMoved() {
 }
 
 function mousePressed() {
-
+    aliens.push(new Alien(cursor.pos.x, cursor.pos.y));
 }
