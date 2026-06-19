@@ -1,12 +1,20 @@
 "use strict";
 
-let sW = 640;
-let sH = 480;
-let fps = 60;
+const sW = 640;
+const sH = 480;
+const fps = 60;
+
+const enemySpawnInterval = 10000;
+const enemyHeight = -sH/2.5;
+const maxEnemies = 10;
+
 let scaleFactor = 1;
 let pg;
-
-let bg, enemy;
+let bg;
+let enemies = [];
+let enemySpawnedLast = 0;
+let aliens = [];
+let cursor;
 
 function preload() {
     //shader = loadShader('shaders/basic.vert', 'shaders/effect.frag');
@@ -27,15 +35,29 @@ function setup() {
     pg.pixelDensity(1);
     pg.noStroke();
 
+    cursor = new Cursor();
+
     bg = new Starfield(100);
-    enemy = new Enemy(0, -pg.height/2.5);
+    enemies.push(new Enemy(0, enemyHeight));
 }
 
 
 
 function draw() {
+    const t = millis();
+
     bg.run();
-    enemy.run();
+    
+    if (enemies.length < maxEnemies && t > enemySpawnedLast + enemySpawnInterval) {
+        enemySpawnedLast = t;
+        enemies.push(new Enemy(0, enemyHeight));
+    }
+
+    for (let i=0; i<enemies.length; i++) {
+        enemies[i].run();
+    }
+
+    cursor.run();
 
     image(pg, 0, 0, width, height);
 }
