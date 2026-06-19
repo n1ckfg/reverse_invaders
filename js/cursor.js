@@ -6,8 +6,8 @@ class Cursor {
 	}
 
 	update() {
-		this.pos.x = mouseX;
-		this.pos.y = mouseY;
+		this.pos.x = mouseX / scaleFactor - sW / 2;
+		this.pos.y = mouseY / scaleFactor - sH / 2;
 	}
 
 	draw() {
