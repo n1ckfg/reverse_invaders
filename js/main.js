@@ -78,6 +78,14 @@ function draw() {
         enemies[i].run();
     }
 
+    if (keyIsPressed) {
+        if (keyCode == LEFT_ARROW) {
+            alienSquadrons[alienSquadrons.length-1].move(true);
+        } else if (keyCode == RIGHT_ARROW) {
+            alienSquadrons[alienSquadrons.length-1].move(false);
+        }        
+    }
+
     for (let i=0; i<alienSquadrons.length; i++) {
         alienSquadrons[i].run();
     }
@@ -113,7 +121,7 @@ function draw() {
         if (alienSquadrons.length === 0) alienSquadrons.push(new AlienSquadron());
     }
 
-    //console.log("Aliens: " + aliens.length + ", Bullets: " + alienBullets.length + "\nEnemies: " + enemies.length + ", Bullets: " + enemyBullets.length);
+    //console.log("Squadrons: " + alienSquadrons.length + ", Bullets: " + alienBullets.length + "\nEnemies: " + enemies.length + ", Bullets: " + enemyBullets.length);
 }
 
 function windowResized() {
@@ -123,6 +131,7 @@ function windowResized() {
     resizeCanvas(canvasW, canvasH);
 }
 
+/*
 function keyPressed() {
     if (keyCode == LEFT_ARROW) {
         alienSquadrons[alienSquadrons.length-1].move(true);
@@ -130,12 +139,18 @@ function keyPressed() {
         alienSquadrons[alienSquadrons.length-1].move(false);
     }
 }
+*/
 
 function mouseMoved() {
     firstRun = false;
 }
 
 function mousePressed() {
-    if (alienSquadrons[alienSquadrons.length-1].complete) alienSquadrons.push(new AlienSquadron());
-    if (!firstRun) alienSquadrons[alienSquadrons.length-1].aliens.push(new Alien(cursor.pos.x, cursor.pos.y));
+    if (alienSquadrons[alienSquadrons.length-1].complete) {
+        for (let i=0; i<alienSquadrons.length; i++) {
+            alienSquadrons[i].controllable = false;
+        }
+        alienSquadrons.push(new AlienSquadron());
+    }
+    if (!firstRun) alienSquadrons[alienSquadrons.length-1].addAlien();
 }

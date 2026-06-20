@@ -17,6 +17,7 @@ class Alien {
 		this.fired = false;
 		this.attack = false;
 		this.targetModeOffDist = 10;
+		this.controllable = false;
 	}
 
 	update() {
@@ -53,8 +54,14 @@ class Alien {
 				pg.circle(this.target.x, this.target.y, 10);
 			}
 
-			pg.stroke(0, 127, 255);
-			pg.fill(0, 0, 255);
+			if (!this.controllable) {
+				pg.stroke(0, 127, 255);
+				pg.fill(0, 0, 255);
+			} else {
+				pg.stroke(127, 127, 255);
+				pg.fill(127, 0, 255);
+			}
+
 			pg.push();
 			pg.translate(this.pos.x, this.pos.y);
 			pg.square(0, 0, this.alienSize);
@@ -152,16 +159,17 @@ class AlienSquadron {
 		this.aliens = [];
 		this.alive = true;
 		this.firstRun = true;
-		this.moveSpeed = 5;
+		this.moveSpeed = 3;
 		this.timestamp = 0;
 		this.complete = false;
-		this.alienSquadronInterval = 2000;
-		this.alienSquadronMax = 10;
+		this.alienSquadronInterval = 1000;
+		this.alienSquadronMax = 5;
+		this.controllable = true;
 	}
 
 	update() {
 		if (this.firstRun && this.aliens.length > 0) {
-			this.timestamp = t;
+			this.timestamp = t
 			this.firstRun = false;
 		} else if (!this.firstRun && this.aliens.length === 0) {
 			this.alive = false;
@@ -174,6 +182,7 @@ class AlienSquadron {
 		let attack = true;
 
 		for (let i=0; i<this.aliens.length; i++) {
+			this.aliens[i].controllable = this.controllable;
 			this.aliens[i].update();
 			if (this.aliens[i].targetMode) attack = false;
 		}
@@ -188,7 +197,7 @@ class AlienSquadron {
 
 	draw() {
 		for (let i=0; i<this.aliens.length; i++) {
-			if (i > 0 && !this.complete) {
+			if (i > 0 && !this.aliens[i].attack) {
 				pg.line(this.aliens[i].target.x, this.aliens[i].target.y, this.aliens[i-1].target.x, this.aliens[i-1].target.y)
 			}
 			this.aliens[i].draw();
@@ -206,15 +215,20 @@ class AlienSquadron {
 	}
 
 	move(left) {
-		if (left) {
-			for (let i=0; i<this.aliens.length; i++) {
-				if (!this.aliens[i].targetMode) this.aliens[i].pos.x -= this.moveSpeed;
-			}
-		} else {
-			for (let i=0; i<this.aliens.length; i++) {
-				if (!this.aliens[i].targetMode) this.aliens[i].pos.x += this.moveSpeed;
+		for (let i=0; i<this.aliens.length; i++) {
+			if (this.aliens[i].controllable) {
+				if (left) {
+					if (this.aliens[i].attack) this.aliens[i].pos.x -= this.moveSpeed;
+				} else {
+					if (this.aliens[i].attack) this.aliens[i].pos.x += this.moveSpeed;
+				}
 			}
 		}
+	}
+
+	addAlien() {
+		this.aliens.push(new Alien(cursor.pos.x, cursor.pos.y));
+		this.timestamp = t;
 	}
 
 }
