@@ -35,9 +35,14 @@ class Enemy {
 		pg.stroke(0, 255, 0);
 		pg.push();
 		pg.translate(this.pos.x, this.pos.y);
-		pg.fill(127, 255, 127);
+		if (!this.alive) {
+			pg.fill(255);
+			pg.circle(0, 0, this.enemySize * 2);
+			pg.fill(0);
+		}
+		if (this.alive) pg.fill(127, 255, 127);
 		pg.triangle(-this.enemySize/2, -this.enemySize/2, 0, this.enemySize, this.enemySize/2, -this.enemySize/2);
-		pg.fill(227, 255, 127);
+		if (this.alive) pg.fill(227, 255, 127);
 		pg.circle(0, 0, 20);
 		pg.pop();
 	}
@@ -58,10 +63,10 @@ class Enemy {
 
 	hitCheck() {
 		for (let i=0; i<alienBullets.length; i++) {
-			if (alienBullets[i].pos.dist(this.pos) < 1000) {
+			if (alienBullets[i].pos.dist(this.pos) < this.enemySize/2) {
 				alienBullets[i].alive = false;
-				return true;
 				console.log("!!!");
+				return true;
 			}
 		}
 
