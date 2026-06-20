@@ -15,6 +15,8 @@ class Alien {
 		this.targetMode = true;
 		this.ease = 0.05;
 		this.fired = false;
+		this.attack = false;
+		this.targetModeOffDist = 10;
 	}
 
 	update() {
@@ -23,11 +25,11 @@ class Alien {
 		if (this.targetMode) {
 			this.pos.lerp(this.target, this.ease);
 
-			if (this.pos.dist(this.target) < 1.0) {
+			if (this.pos.dist(this.target) < this.targetModeOffDist) {
 				this.targetMode = false;
 			}
 		} else {
-			this.pos.y -= this.alienSpeed;
+			if (this.attack) this.pos.y -= this.alienSpeed;
 		}
 		
 		if (this.hitCheck()) {
@@ -169,9 +171,19 @@ class AlienSquadron {
 			this.complete = true;
 		}
 
+		let attack = true;
+
 		for (let i=0; i<this.aliens.length; i++) {
 			this.aliens[i].update();
+			if (this.aliens[i].targetMode) attack = false;
 		}
+
+		if (attack) {
+			for (let i=0; i<this.aliens.length; i++) {
+				this.aliens[i].attack = true;
+			}
+		}
+
 	}
 
 	draw() {
