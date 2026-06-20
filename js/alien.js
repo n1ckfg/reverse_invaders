@@ -54,12 +54,12 @@ class Alien {
 				pg.circle(this.target.x, this.target.y, 10);
 			}
 
-			if (!this.controllable) {
-				pg.stroke(0, 127, 255);
+			if (this.controllable && this.attack) {
+				pg.stroke(255, 127, 255);
 				pg.fill(0, 0, 255);
 			} else {
-				pg.stroke(127, 127, 255);
-				pg.fill(127, 0, 255);
+				pg.stroke(0, 127, 255);
+				pg.fill(0, 0, 255);
 			}
 
 			pg.push();
@@ -198,6 +198,8 @@ class AlienSquadron {
 	draw() {
 		for (let i=0; i<this.aliens.length; i++) {
 			if (i > 0 && !this.aliens[i].attack) {
+				pg.strokeWeight(1);
+				pg.stroke(0, 127, 255);
 				pg.line(this.aliens[i].target.x, this.aliens[i].target.y, this.aliens[i-1].target.x, this.aliens[i-1].target.y)
 			}
 			this.aliens[i].draw();
