@@ -15,7 +15,6 @@ class Alien {
 		this.player = true;
 		this.targetMode = true;
 		this.ease = 0.05;
-		this.bullets = [];
 		this.fired = false;
 	}
 
@@ -32,14 +31,6 @@ class Alien {
 			this.pos.y -= this.alienSpeed;
 		}
 		
-		for (let i=0; i<this.bullets.length; i++) {
-			this.bullets[i].update();
-		}
-
-		for (let i=0; i<this.bullets.length; i++) {
-			if (!this.bullets[i].alive) this.bullets.splice(i, 1);
-		}
-
 		if (this.hitCheck()) {
 			this.alive = false;
 		} else if (this.pos.y < this.goalPosY && !this.fired) {
@@ -76,9 +67,6 @@ class Alien {
 			pg.pop();			
 		}
 
-		for (let i=0; i<this.bullets.length; i++) {
-			this.bullets[i].draw();
-		}
 	}
 
 	run() {
@@ -87,11 +75,9 @@ class Alien {
 	}
 
 	hitCheck() {
-		for (let i=0; i<enemies.length; i++) {
-			for (let j=0; j<enemies[i].bullets.length; j++) {
-				if (enemies[i].bullets[j].pos.dist(this.pos) < this.alienSize) {
-					return true;
-				}
+		for (let i=0; i<enemyBullets.length; i++) {
+			if (enemyBullets[i].pos.dist(this.pos) < this.alienSize) {
+				return true;
 			}
 		}
 
@@ -99,7 +85,7 @@ class Alien {
 	}
 
 	fireBullet() {
-		this.bullets.push(new AlienBullet(this.pos.x, this.pos.y));
+		alienBullets.push(new AlienBullet(this.pos.x, this.pos.y));
 	}
 
 }

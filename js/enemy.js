@@ -9,7 +9,6 @@ class Enemy {
 		this.target = createVector(x, this.startPosY);
 		
 		this.ease = 0.05;
-		this.bullets = [];
 		this.alive = true;
 		this.fireChance = 0.01;
 		this.enemySize = 30;
@@ -28,14 +27,6 @@ class Enemy {
 			}
 		}
 
-		for (let i=0; i<this.bullets.length; i++) {
-			this.bullets[i].update();
-		}
-
-		for (let i=0; i<this.bullets.length; i++) {
-			if (!this.bullets[i].alive) this.bullets.splice(i, 1);
-		}
-
 		if (this.hitCheck()) this.alive = false;
 	}
 
@@ -49,10 +40,6 @@ class Enemy {
 		pg.fill(227, 255, 127);
 		pg.circle(0, 0, 20);
 		pg.pop();
-
-		for (let i=0; i<this.bullets.length; i++) {
-			this.bullets[i].draw();
-		}
 	}
 
 	run() {
@@ -66,15 +53,13 @@ class Enemy {
 
 	fireBullet() {
 		// Don't fire offscreen
-		if (this.pos.y >= this.origPosY) this.bullets.push(new EnemyBullet(this.pos.x, this.pos.y));
+		if (this.pos.y >= this.origPosY) enemyBullets.push(new EnemyBullet(this.pos.x, this.pos.y));
 	}
 
 	hitCheck() {
-		for (let i=0; i<aliens.length; i++) {
-			for (let j=0; j<aliens[i].bullets.length; j++) {
-				if (aliens[i].bullets[j].pos.dist(this.pos) < this.enemySize) {
-					return true;
-				}
+		for (let i=0; i<alienBullets.length; i++) {
+			if (alienBullets[i].pos.dist(this.pos) < this.enemySize) {
+				return true;
 			}
 		}
 

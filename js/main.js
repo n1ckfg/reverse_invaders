@@ -12,8 +12,10 @@ let scaleFactor = 1;
 let pg;
 let bg;
 let enemies = [];
+let enemyBullets = [];
 let enemySpawnedLast = 0;
 let aliens = [];
+let alienBullets = [];
 let cursor;
 let t;
 let firstRun = true;
@@ -49,10 +51,22 @@ function setup() {
     enemies.push(new Enemy(0, enemyHeight));
 }
 
-
-
 function draw() {
-    let bulletsCount = 0;
+    for (let i=0; i<enemyBullets.length; i++) {
+        enemyBullets[i].update();
+    }
+
+    for (let i=0; i<alienBullets.length; i++) {
+        alienBullets[i].update();
+    }
+
+    for (let i=0; i<enemyBullets.length; i++) {
+        if (!enemyBullets[i].alive) enemyBullets.splice(i, 1);
+    }
+
+    for (let i=0; i<alienBullets.length; i++) {
+        if (!alienBullets[i].alive) alienBullets.splice(i, 1);
+    }
 
     t = millis();
     cursor.update();
@@ -66,7 +80,6 @@ function draw() {
 
     for (let i=0; i<enemies.length; i++) {
         enemies[i].run();
-        bulletsCount += enemies[i].bullets.length;
     }
 
     for (let i=0; i<aliens.length; i++) {
@@ -77,11 +90,19 @@ function draw() {
         if (!aliens[i].alive) aliens.splice(i, 1);
     }
 
+    for (let i=0; i<enemyBullets.length; i++) {
+        enemyBullets[i].draw();
+    }
+
+    for (let i=0; i<alienBullets.length; i++) {
+        alienBullets[i].draw();
+    }
+
     if (!firstRun) cursor.draw();
 
     image(pg, width/2, height/2, width, height);
 
-    //console.log("Aliens: " + aliens.length + "   Enemies: " + enemies.length + "   Bullets: " + bulletsCount);
+    //console.log("Aliens: " + aliens.length + ", Bullets: " + alienBullets.length + " / Enemies: " + enemies.length + ", Bullets: " + enemyBullets.length);
 }
 
 function windowResized() {
