@@ -83,10 +83,16 @@ function draw() {
     }
 
     if (moveLeft) {
-        alienSquadrons[alienSquadrons.length-1].move(true);
+        alienSquadrons[alienSquadrons.length-1].moveLR(true);
     } else if (moveRight) {
-        alienSquadrons[alienSquadrons.length-1].move(false);
+        alienSquadrons[alienSquadrons.length-1].moveLR(false);
     }        
+
+    if (moveUp) {
+        alienSquadrons[alienSquadrons.length-1].moveUD(true);
+    } else if (moveDown) {
+        alienSquadrons[alienSquadrons.length-1].moveUD(false);
+    }
 
     for (let i=0; i<alienSquadrons.length; i++) {
         alienSquadrons[i].run();
@@ -134,6 +140,10 @@ function windowResized() {
 }
 
 function keyPressed() {
+    moveLeft = false;
+    moveRight = false;
+    moveUp = false;
+    moveDown = false;
     if (keyCode === LEFT_ARROW || key === 'a' || key === 'A') moveLeft = true;
     if (keyCode === RIGHT_ARROW || key === 'd' || key === 'D') moveRight = true;
     if (keyCode === UP_ARROW || key === 'w' || key === 'W') moveUp = true;
@@ -141,14 +151,14 @@ function keyPressed() {
 }
 
 function keyReleased() {
-        if (keyCode === LEFT_ARROW || key === 'a' || key === 'A' || keyCode === RIGHT_ARROW || key === 'd' || key === 'D') {
-            moveLeft = false;
-            moveRight = false;
-        }
-        if (keyCode === UP_ARROW || key === 'w' || key === 'W' || keyCode === DOWN_ARROW || key === 's' || key === 'S') {
-            moveUp = false;
-            moveDown = false;
-        }
+    if (keyCode === LEFT_ARROW || key === 'a' || key === 'A' || keyCode === RIGHT_ARROW || key === 'd' || key === 'D') {
+        moveLeft = false;
+        moveRight = false;
+    }
+    if (keyCode === UP_ARROW || key === 'w' || key === 'W' || keyCode === DOWN_ARROW || key === 's' || key === 'S') {
+        moveUp = false;
+        moveDown = false;
+    }
 }
 
 function mouseMoved() {

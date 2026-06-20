@@ -223,7 +223,7 @@ class AlienSquadron {
 		this.draw();
 	}
 
-	move(left) {
+	moveLR(left) {
 		for (let i=0; i<this.aliens.length; i++) {
 			if (this.aliens[i].controllable) {
 				if (left) {
@@ -235,8 +235,16 @@ class AlienSquadron {
 		}
 	}
 
-	throttle(up) {
-		// TODO
+	moveUD(up) {
+		for (let i=0; i<this.aliens.length; i++) {
+			if (this.aliens[i].controllable) {
+				if (up) {
+					if (this.aliens[i].attack) this.aliens[i].pos.y -= this.moveSpeed;
+				} else {
+					if (this.aliens[i].attack) this.aliens[i].pos.y += this.moveSpeed / 2;
+				}
+			}
+		}
 	}
 
 	addAlien() {
