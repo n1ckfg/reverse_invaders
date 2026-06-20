@@ -20,6 +20,8 @@ let alienBullets = [];
 let cursor;
 let t;
 let firstRun = true;
+let moveLeft = false;
+let moveRight = false;
 
 function preload() {
     //shader = loadShader('shaders/basic.vert', 'shaders/effect.frag');
@@ -78,13 +80,11 @@ function draw() {
         enemies[i].run();
     }
 
-    if (keyIsPressed) {
-        if (keyCode == LEFT_ARROW) {
-            alienSquadrons[alienSquadrons.length-1].move(true);
-        } else if (keyCode == RIGHT_ARROW) {
-            alienSquadrons[alienSquadrons.length-1].move(false);
-        }        
-    }
+    if (moveLeft) {
+        alienSquadrons[alienSquadrons.length-1].move(true);
+    } else if (moveRight) {
+        alienSquadrons[alienSquadrons.length-1].move(false);
+    }        
 
     for (let i=0; i<alienSquadrons.length; i++) {
         alienSquadrons[i].run();
@@ -131,15 +131,18 @@ function windowResized() {
     resizeCanvas(canvasW, canvasH);
 }
 
-/*
 function keyPressed() {
     if (keyCode == LEFT_ARROW) {
-        alienSquadrons[alienSquadrons.length-1].move(true);
+        moveLeft = true;
     } else if (keyCode == RIGHT_ARROW) {
-        alienSquadrons[alienSquadrons.length-1].move(false);
+        moveRight = true;
     }
 }
-*/
+
+function keyReleased() {
+        moveLeft = false;
+        moveRight = false;
+}
 
 function mouseMoved() {
     firstRun = false;

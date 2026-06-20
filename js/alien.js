@@ -199,7 +199,11 @@ class AlienSquadron {
 		for (let i=0; i<this.aliens.length; i++) {
 			if (i > 0 && !this.aliens[i].attack) {
 				pg.strokeWeight(1);
-				pg.stroke(0, 127, 255);
+				if (this.complete) {
+					pg.stroke(0, random(127), random(127, 255));
+				} else {
+					pg.stroke(0, 127, 255);					
+				}
 				pg.line(this.aliens[i].target.x, this.aliens[i].target.y, this.aliens[i-1].target.x, this.aliens[i-1].target.y)
 			}
 			this.aliens[i].draw();
