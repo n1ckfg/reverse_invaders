@@ -176,7 +176,7 @@ class AlienSquadron {
 
 	draw() {
 		for (let i=0; i<this.aliens.length; i++) {
-			if (i > 0 && this.aliens[i].targetMode) {
+			if (i > 0 && !this.complete) {
 				pg.line(this.aliens[i].target.x, this.aliens[i].target.y, this.aliens[i-1].target.x, this.aliens[i-1].target.y)
 			}
 			this.aliens[i].draw();
