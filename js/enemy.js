@@ -70,9 +70,15 @@ class Enemy {
 	}
 
 	hitCheck() {
-		let returns = false;
+		for (let i=0; i<aliens.length; i++) {
+			for (let j=0; j<aliens[i].bullets.length; j++) {
+				if (aliens[i].bullets[j].pos.dist(this.pos) < this.enemySize) {
+					return true;
+				}
+			}
+		}
 
-		return returns;		
+		return false;
 	}
 
 }
