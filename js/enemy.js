@@ -32,19 +32,23 @@ class Enemy {
 
 	draw() {
 		pg.strokeWeight(1);
-		pg.stroke(0, 255, 0);
-		pg.push();
-		pg.translate(this.pos.x, this.pos.y);
-		if (!this.alive) {
+		if (this.alive) {
+			pg.stroke(0, 255, 0);
+			pg.push();
+			pg.translate(this.pos.x, this.pos.y);
+			pg.fill(127, 255, 127);
+			pg.triangle(-this.enemySize/2, -this.enemySize/2, 0, this.enemySize, this.enemySize/2, -this.enemySize/2);
+			pg.fill(227, 255, 127);
+			pg.circle(0, 0, 20);
+			pg.pop();
+		} else {
+			pg.noStroke();
 			pg.fill(255);
-			pg.circle(0, 0, this.enemySize * 2);
-			pg.fill(0);
+			pg.push();
+			pg.translate(this.pos.x, this.pos.y);
+			pg.circle(0, 0, this.enemySize * random(2, 4));
+			pg.pop();	
 		}
-		if (this.alive) pg.fill(127, 255, 127);
-		pg.triangle(-this.enemySize/2, -this.enemySize/2, 0, this.enemySize, this.enemySize/2, -this.enemySize/2);
-		if (this.alive) pg.fill(227, 255, 127);
-		pg.circle(0, 0, 20);
-		pg.pop();
 	}
 
 	run() {
@@ -65,7 +69,6 @@ class Enemy {
 		for (let i=0; i<alienBullets.length; i++) {
 			if (alienBullets[i].pos.dist(this.pos) < this.enemySize/2) {
 				alienBullets[i].alive = false;
-				console.log("!!!");
 				return true;
 			}
 		}
