@@ -4,7 +4,7 @@ class Bullet {
 		this.bulletSize = 10;
 		this.bulletSpeed = 1;
 		this.bulletSpeedDelta = 0.05;
-		this.pos = createVector(x - this.bulletSize/2.0, y);
+		this.pos = createVector(x, y);
 		this.alive = true;
 	}
 

@@ -26,15 +26,21 @@ function setup() {
     let canvasW = sW * scaleFactor;
     let canvasH = sH * scaleFactor;
     createCanvas(canvasW, canvasH);
-    pixelDensity(1);
-    noCursor();
     frameRate(fps);
-    noStroke();
+    noCursor();
+
     noSmooth();
+    pixelDensity(1);
+    rectMode(CENTER);
+    ellipseMode(CENTER);
+    imageMode(CENTER);
 
     pg = createGraphics(sW, sH, WEBGL);
+    pg.noSmooth();
     pg.pixelDensity(1);
-    pg.noStroke();
+    pg.rectMode(CENTER);
+    pg.ellipseMode(CENTER);
+    pg.imageMode(CENTER);
 
     cursor = new Cursor();
 
@@ -72,7 +78,7 @@ function draw() {
 
     cursor.draw();
 
-    image(pg, 0, 0, width, height);
+    image(pg, width/2, height/2, width, height);
 
     console.log("Aliens: " + aliens.length + "   Enemies: " + enemies.length + "   Bullets: " + bulletsCount);
 }
