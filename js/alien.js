@@ -150,6 +150,7 @@ class AlienSquadron {
 		this.aliens = [];
 		this.alive = true;
 		this.firstRun = true;
+		this.moveSpeed = 5;
 	}
 
 	update() {
@@ -181,6 +182,18 @@ class AlienSquadron {
 	run() {
 		this.update();
 		this.draw();
+	}
+
+	move(left) {
+		if (left) {
+			for (let i=0; i<this.aliens.length; i++) {
+				if (!this.aliens[i].targetMode) this.aliens[i].pos.x -= this.moveSpeed;
+			}
+		} else {
+			for (let i=0; i<this.aliens.length; i++) {
+				if (!this.aliens[i].targetMode) this.aliens[i].pos.x += this.moveSpeed;
+			}
+		}
 	}
 
 }

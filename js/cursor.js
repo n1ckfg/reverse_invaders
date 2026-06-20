@@ -21,13 +21,14 @@ class Cursor {
 
 	draw() {
 		pg.noFill();
-
+	
 		pg.strokeWeight(2);
 		pg.stroke(127, 127);
+
 		pg.push();
 		pg.translate(this.pos.x, this.pos.y);
-		pg.line(-this.cursorSize, 0, this.cursorSize, 0);
 		pg.line(0, -this.cursorSize, 0, this.cursorSize);
+		pg.line(-this.cursorSize, 0, this.cursorSize, 0);
 		pg.pop();
 
 		if (mouseIsPressed) {
@@ -37,10 +38,11 @@ class Cursor {
 			pg.strokeWeight(1);
 			pg.stroke(255);
 		}
+		
 		pg.push();
 		pg.translate(this.orig_pos.x, this.orig_pos.y);
-		pg.line(-this.cursorSize, 0, this.cursorSize, 0);
 		pg.line(0, -this.cursorSize, 0, this.cursorSize);
+		pg.line(-this.cursorSize, 0, this.cursorSize, 0);
 		pg.pop();
 	}
 

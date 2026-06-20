@@ -115,7 +115,7 @@ function draw() {
         if (!alienSquadrons[i].alive) alienSquadrons.splice(i, 1);
         if (alienSquadrons.length === 0) alienSquadrons.push(new AlienSquadron());
     }
-    
+
     //console.log("Aliens: " + aliens.length + ", Bullets: " + alienBullets.length + "\nEnemies: " + enemies.length + ", Bullets: " + enemyBullets.length);
 }
 
@@ -128,9 +128,9 @@ function windowResized() {
 
 function keyPressed() {
     if (keyCode == LEFT_ARROW) {
-        //
+        alienSquadrons[alienSquadrons.length-1].move(true);
     } else if (keyCode == RIGHT_ARROW) {
-        //
+        alienSquadrons[alienSquadrons.length-1].move(false);
     }
 }
 
