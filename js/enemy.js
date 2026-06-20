@@ -58,8 +58,10 @@ class Enemy {
 
 	hitCheck() {
 		for (let i=0; i<alienBullets.length; i++) {
-			if (alienBullets[i].pos.dist(this.pos) < this.enemySize) {
+			if (alienBullets[i].pos.dist(this.pos) < 1000) {
+				alienBullets[i].alive = false;
 				return true;
+				console.log("!!!");
 			}
 		}
 
@@ -77,6 +79,7 @@ class EnemyBullet {
 		this.bulletSpeedDelta = 0.05;
 		this.pos = createVector(x, y);
 		this.alive = true;
+		this.rotSpeed = 0.01;
 	}
 
 	update() {
@@ -91,7 +94,7 @@ class EnemyBullet {
 		pg.fill(random(127, 255), random(127, 255), 0);
 		pg.push();
 		pg.translate(this.pos.x, this.pos.y);
-		pg.rotateZ(frameCount * 0.01);
+		pg.rotateZ(frameCount * this.rotSpeed);
 		pg.square(0, 0, this.bulletSize);
 		pg.pop();
 	}
