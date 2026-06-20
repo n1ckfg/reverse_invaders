@@ -35,6 +35,8 @@ class Enemy {
 		for (let i=0; i<this.bullets.length; i++) {
 			if (!this.bullets[i].alive) this.bullets.splice(i, 1);
 		}
+
+		if (this.hitCheck()) this.alive = false;
 	}
 
 	draw() {
@@ -65,6 +67,12 @@ class Enemy {
 	fireBullet() {
 		// Don't fire offscreen
 		if (this.pos.y >= this.origPosY) this.bullets.push(new EnemyBullet(this.pos.x, this.pos.y));
+	}
+
+	hitCheck() {
+		let returns = false;
+
+		return returns;		
 	}
 
 }

@@ -16,6 +16,7 @@ let enemySpawnedLast = 0;
 let aliens = [];
 let cursor;
 let t;
+let firstRun = true;
 
 function preload() {
     //shader = loadShader('shaders/basic.vert', 'shaders/effect.frag');
@@ -76,7 +77,7 @@ function draw() {
         if (!aliens[i].alive) aliens.splice(i, 1);
     }
 
-    cursor.draw();
+    if (!firstRun) cursor.draw();
 
     image(pg, width/2, height/2, width, height);
 
@@ -93,13 +94,15 @@ function windowResized() {
 function keyPressed() {
     if (keyCode == LEFT_ARROW) {
         console.log("!!!");
+    } else if (keyCode == RIGHT_ARROW) {
+        console.log("!!!");
     }
 }
 
 function mouseMoved() {
-
+    firstRun = false;
 }
 
 function mousePressed() {
-    aliens.push(new Alien(cursor.pos.x, cursor.pos.y));
+    if (!firstRun) aliens.push(new Alien(cursor.pos.x, cursor.pos.y));
 }

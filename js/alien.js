@@ -30,7 +30,7 @@ class Alien {
 		}
 		
 
-		if (this.pos.y < -this.w - this.alienSize) this.alive = false;
+		if (this.hitCheck() || this.pos.y < -this.w - this.alienSize) this.alive = false;
 	}
 
 	draw() {
@@ -56,5 +56,12 @@ class Alien {
 		this.update();
 		this.draw();
 	}
+
+	hitCheck() {
+		let returns = false;
+
+		return returns;
+	}
+
 
 }
