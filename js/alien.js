@@ -12,7 +12,6 @@ class Alien {
 		this.alienSize = 20;
 		this.alienSpeed = 2;
 		this.alive = true;
-		this.player = true;
 		this.targetMode = true;
 		this.ease = 0.05;
 		this.fired = false;
@@ -135,6 +134,48 @@ class AlienBullet {
 			pg.fill(255);
 			pg.circle(this.pos.x, this.pos.y, random(this.bulletSize, this.bulletSize*2));
 		}
+	}
+
+	run() {
+		this.update();
+		this.draw();
+	}
+
+}
+
+
+class AlienSquadron {
+
+	constructor() {
+		this.aliens = [];
+		this.alive = true;
+		this.firstRun = true;
+	}
+
+	update() {
+		if (this.firstRun && this.aliens.length > 0) {
+			this.firstRun = false;
+		} else if (!this.firstRun && this.aliens.length === 0) {
+			this.alive = false;
+		}
+
+		for (let i=0; i<this.aliens.length; i++) {
+			this.aliens[i].update();
+		}
+	}
+
+	draw() {
+		for (let i=0; i<this.aliens.length; i++) {
+			if (i > 0 && this.aliens[i].targetMode) {
+				pg.line(this.aliens[i].target.x, this.aliens[i].target.y, this.aliens[i-1].target.x, this.aliens[i-1].target.y)
+			}
+			this.aliens[i].draw();
+		}
+
+	    // cleanup
+        for (let i=0; i<this.aliens.length; i++) {
+            if (!this.aliens[i].alive) this.aliens.splice(i, 1);
+        }
 	}
 
 	run() {

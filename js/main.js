@@ -9,13 +9,16 @@ const noEnemySpawnInterval = 2000;
 const enemyHeight = -sH/2.5;
 const maxEnemies = 10;
 
+const alienSquadronInterval = 2000;
+const alienSquadronMax = 10;
+
 let scaleFactor = 1;
 let pg;
 let bg;
 let enemies = [];
 let enemyBullets = [];
 let enemySpawnedLast = 0;
-let aliens = [];
+let alienSquadrons = [];
 let alienBullets = [];
 let cursor;
 let t;
@@ -50,28 +53,11 @@ function setup() {
 
     bg = new Starfield();
     enemies.push(new Enemy(0, enemyHeight));
+
+    alienSquadrons.push(new AlienSquadron());
 }
 
 function draw() {
-    // cleanup
-    for (let i=0; i<enemyBullets.length; i++) {
-        if (!enemyBullets[i].alive) enemyBullets.splice(i, 1);
-    }
-
-    for (let i=0; i<enemies.length; i++) {
-        if (!enemies[i].alive) enemies.splice(i, 1);
-    }
-
-    for (let i=0; i<alienBullets.length; i++) {
-        if (!alienBullets[i].alive) alienBullets.splice(i, 1);
-    }
-
-    for (let i=0; i<aliens.length; i++) {
-        if (!aliens[i].alive) aliens.splice(i, 1);
-    }
-
-    // ~ ~ ~ ~ ~ ~ ~ ~
-
     t = millis();
     cursor.update();
 
@@ -95,8 +81,8 @@ function draw() {
         enemies[i].run();
     }
 
-    for (let i=0; i<aliens.length; i++) {
-        aliens[i].run();
+    for (let i=0; i<alienSquadrons.length; i++) {
+        alienSquadrons[i].run();
     }
 
     // draw
@@ -112,6 +98,24 @@ function draw() {
 
     image(pg, width/2, height/2, width, height);
 
+    // cleanup
+    for (let i=0; i<enemyBullets.length; i++) {
+        if (!enemyBullets[i].alive) enemyBullets.splice(i, 1);
+    }
+
+    for (let i=0; i<enemies.length; i++) {
+        if (!enemies[i].alive) enemies.splice(i, 1);
+    }
+
+    for (let i=0; i<alienBullets.length; i++) {
+        if (!alienBullets[i].alive) alienBullets.splice(i, 1);
+    }
+
+    for (let i=0; i<alienSquadrons.length; i++) {
+        if (!alienSquadrons[i].alive) alienSquadrons.splice(i, 1);
+        if (alienSquadrons.length === 0) alienSquadrons.push(new AlienSquadron());
+    }
+    
     //console.log("Aliens: " + aliens.length + ", Bullets: " + alienBullets.length + "\nEnemies: " + enemies.length + ", Bullets: " + enemyBullets.length);
 }
 
@@ -124,9 +128,9 @@ function windowResized() {
 
 function keyPressed() {
     if (keyCode == LEFT_ARROW) {
-        console.log("!!!");
+        //
     } else if (keyCode == RIGHT_ARROW) {
-        console.log("!!!");
+        //
     }
 }
 
@@ -135,5 +139,5 @@ function mouseMoved() {
 }
 
 function mousePressed() {
-    if (!firstRun) aliens.push(new Alien(cursor.pos.x, cursor.pos.y));
+    if (!firstRun) alienSquadrons[alienSquadrons.length-1].aliens.push(new Alien(cursor.pos.x, cursor.pos.y));
 }

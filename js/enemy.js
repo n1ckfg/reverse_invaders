@@ -10,7 +10,7 @@ class Enemy {
 		
 		this.ease = 0.05;
 		this.alive = true;
-		this.fireChance = 0.01;
+		this.fireChance = 0.05;
 		this.enemySize = 30;
 	}
 
