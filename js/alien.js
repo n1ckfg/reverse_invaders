@@ -235,6 +235,10 @@ class AlienSquadron {
 		}
 	}
 
+	throttle(up) {
+		// TODO
+	}
+
 	addAlien() {
 		this.aliens.push(new Alien(cursor.pos.x, cursor.pos.y));
 		this.timestamp = t;

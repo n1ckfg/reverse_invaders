@@ -22,6 +22,8 @@ let t;
 let firstRun = true;
 let moveLeft = false;
 let moveRight = false;
+let moveUp = false;
+let moveDown = false;
 
 function preload() {
     //shader = loadShader('shaders/basic.vert', 'shaders/effect.frag');
@@ -132,16 +134,21 @@ function windowResized() {
 }
 
 function keyPressed() {
-    if (keyCode == LEFT_ARROW) {
-        moveLeft = true;
-    } else if (keyCode == RIGHT_ARROW) {
-        moveRight = true;
-    }
+    if (keyCode === LEFT_ARROW || key === 'a' || key === 'A') moveLeft = true;
+    if (keyCode === RIGHT_ARROW || key === 'd' || key === 'D') moveRight = true;
+    if (keyCode === UP_ARROW || key === 'w' || key === 'W') moveUp = true;
+    if (keyCode === DOWN_ARROW || key === 's' || key === 'S') moveDown = true;
 }
 
 function keyReleased() {
-        moveLeft = false;
-        moveRight = false;
+        if (keyCode === LEFT_ARROW || key === 'a' || key === 'A' || keyCode === RIGHT_ARROW || key === 'd' || key === 'D') {
+            moveLeft = false;
+            moveRight = false;
+        }
+        if (keyCode === UP_ARROW || key === 'w' || key === 'W' || keyCode === DOWN_ARROW || key === 's' || key === 'S') {
+            moveUp = false;
+            moveDown = false;
+        }
 }
 
 function mouseMoved() {
