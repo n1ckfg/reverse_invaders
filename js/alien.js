@@ -151,13 +151,22 @@ class AlienSquadron {
 		this.alive = true;
 		this.firstRun = true;
 		this.moveSpeed = 5;
+		this.timestamp = 0;
+		this.complete = false;
+		this.alienSquadronInterval = 2000;
+		this.alienSquadronMax = 10;
 	}
 
 	update() {
 		if (this.firstRun && this.aliens.length > 0) {
+			this.timestamp = t;
 			this.firstRun = false;
 		} else if (!this.firstRun && this.aliens.length === 0) {
 			this.alive = false;
+		}
+
+		if (!this.complete && (this.aliens.length >= this.alienSquadronMax || t > this.timestamp + this.alienSquadronInterval)) {
+			this.complete = true;
 		}
 
 		for (let i=0; i<this.aliens.length; i++) {

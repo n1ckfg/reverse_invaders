@@ -9,9 +9,6 @@ const noEnemySpawnInterval = 2000;
 const enemyHeight = -sH/2.5;
 const maxEnemies = 10;
 
-const alienSquadronInterval = 2000;
-const alienSquadronMax = 10;
-
 let scaleFactor = 1;
 let pg;
 let bg;
@@ -139,5 +136,6 @@ function mouseMoved() {
 }
 
 function mousePressed() {
+    if (alienSquadrons[alienSquadrons.length-1].complete) alienSquadrons.push(new AlienSquadron());
     if (!firstRun) alienSquadrons[alienSquadrons.length-1].aliens.push(new Alien(cursor.pos.x, cursor.pos.y));
 }
