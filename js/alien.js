@@ -111,16 +111,19 @@ class AlienBullet {
 		this.alive = true;
 		this.isLeft = left;
 		this.rotSpeed = 0.1;
+		this.timestamp = t;
+		this.lifetime = 500;
 	}
 
 	update() {
 		if (this.isLeft) {
 			this.pos.x -= this.bulletSpeed;
-			if (this.pos.x < -sW/2) this.alive = false;
 		} else {
 			this.pos.x += this.bulletSpeed;		
-			if (this.pos.x > sW/2) this.alive = false;
 		}
+
+		if (this.pos.x < -sW/2 || this.pos.x > sW/2 || t > this.timestamp + this.lifetime) this.alive = false;
+
 		this.bulletSpeed += this.bulletSpeedDelta;
 	}
 
