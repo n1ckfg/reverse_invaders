@@ -80,7 +80,7 @@ function draw() {
 
     image(pg, width/2, height/2, width, height);
 
-    console.log("Aliens: " + aliens.length + "   Enemies: " + enemies.length + "   Bullets: " + bulletsCount);
+    //console.log("Aliens: " + aliens.length + "   Enemies: " + enemies.length + "   Bullets: " + bulletsCount);
 }
 
 function windowResized() {

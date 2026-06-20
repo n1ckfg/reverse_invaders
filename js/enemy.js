@@ -11,7 +11,7 @@ class Enemy {
 		this.ease = 0.05;
 		this.bullets = [];
 		this.alive = true;
-		this.fireChance = 0.05;
+		this.fireChance = 0.01;
 		this.enemySize = 30;
 	}
 
@@ -63,7 +63,8 @@ class Enemy {
 	}
 
 	fireBullet() {
-		this.bullets.push(new EnemyBullet(this.pos.x, this.pos.y));
+		// Don't fire offscreen
+		if (this.pos.y >= this.origPosY) this.bullets.push(new EnemyBullet(this.pos.x, this.pos.y));
 	}
 
 }
