@@ -5,6 +5,7 @@ class Alien {
 		this.h = sH/2;
 		this.origPosY = y;
 		this.startPosY = sH + 300;
+		this.goalPosY = enemyHeight;
 		this.pos = createVector(x, this.startPosY);
 		this.target = createVector(x, y);
 
@@ -15,6 +16,7 @@ class Alien {
 		this.targetMode = true;
 		this.ease = 0.05;
 		this.bullets = [];
+		this.fired = false;
 	}
 
 	update() {
@@ -30,8 +32,21 @@ class Alien {
 			this.pos.y -= this.alienSpeed;
 		}
 		
+		for (let i=0; i<this.bullets.length; i++) {
+			this.bullets[i].update();
+		}
 
-		if (this.hitCheck() || this.pos.y < -this.w - this.alienSize) this.alive = false;
+		for (let i=0; i<this.bullets.length; i++) {
+			if (!this.bullets[i].alive) this.bullets.splice(i, 1);
+		}
+
+		if (this.hitCheck()) {
+			this.alive = false;
+		} else if (this.pos.y < this.goalPosY && !this.fired) {
+			this.fireBullet();
+			this.fired = true;
+			this.alive = false;
+		}
 	}
 
 	draw() {
@@ -60,6 +75,10 @@ class Alien {
 			pg.circle(0, 0, this.alienSize * random(2, 4));
 			pg.pop();			
 		}
+
+		for (let i=0; i<this.bullets.length; i++) {
+			this.bullets[i].draw();
+		}
 	}
 
 	run() {
@@ -77,6 +96,10 @@ class Alien {
 		}
 
 		return false;
+	}
+
+	fireBullet() {
+		this.bullets.push(new AlienBullet(this.pos.x, this.pos.y));
 	}
 
 }

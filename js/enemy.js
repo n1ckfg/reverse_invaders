@@ -97,7 +97,7 @@ class EnemyBullet {
 	update() {
 		this.pos.y += this.bulletSpeed;
 		this.bulletSpeed += this.bulletSpeedDelta;
-		if (this.pos.y > sH) this.alive = false;
+		if (this.pos.y > sH/2) this.alive = false;
 	}
 
 	draw() {
