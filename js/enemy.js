@@ -1,3 +1,5 @@
+"use strict";
+
 class Enemy {
 	
 	constructor(x, y) {

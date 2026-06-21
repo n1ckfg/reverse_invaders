@@ -1,3 +1,5 @@
+"use strict";
+
 class Alien {
 
 	constructor(x, y) {
