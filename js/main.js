@@ -151,14 +151,10 @@ function keyPressed() {
 }
 
 function keyReleased() {
-    if (keyCode === LEFT_ARROW || key === 'a' || key === 'A' || keyCode === RIGHT_ARROW || key === 'd' || key === 'D') {
-        moveLeft = false;
-        moveRight = false;
-    }
-    if (keyCode === UP_ARROW || key === 'w' || key === 'W' || keyCode === DOWN_ARROW || key === 's' || key === 'S') {
-        moveUp = false;
-        moveDown = false;
-    }
+    if (keyCode === LEFT_ARROW || key === 'a' || key === 'A') moveLeft = false;
+    if (keyCode === RIGHT_ARROW || key === 'd' || key === 'D') moveRight = false;
+    if (keyCode === UP_ARROW || key === 'w' || key === 'W') moveUp = false;
+    if (keyCode === DOWN_ARROW || key === 's' || key === 'S') moveDown = false;
 }
 
 function mouseMoved() {
