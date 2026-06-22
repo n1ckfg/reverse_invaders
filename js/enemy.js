@@ -12,26 +12,19 @@ class Enemy {
 		
 		this.ease = 0.05;
 		this.alive = true;
-		this.fireChance = 0.1;
+		this.fireChance = enemyFireChance;
 		this.enemySize = 30;
-		this.emptyScreen = true;
 	}
 
 	update() {
-		this.emptyScreen === true
-		for (let i=0; i<alienSquadrons.length; i++) {
-			if (alienSquadrons[i].aliens.length != 0) {
-				this.emptyScreen = false;
-				break;
-			}
-		}
+		this.checkEmptyScreen();
 
 		this.pos.y += sin(t/random(2.0)) * random(1.0, 2.0);
 		this.pos.lerp(this.target, this.ease);
 
-		if (this.pos.dist(this.target) < 20.0) {
+		if (this.pos.dist(this.target) < 30.0) {
 			if (random(1.0) < this.fireChance) this.fireBullet();
-			if (this.pos.dist(this.target) < 2.0) this.initTarget();
+			if (this.pos.dist(this.target) < 5.0) this.initTarget();
 		}
 
 		if (this.hitCheck()) this.alive = false;
@@ -64,20 +57,37 @@ class Enemy {
 	}
 
 	initTarget() {
-		if (this.emptyScreen) {
-			this.target = createVector(random(-this.w, this.w), this.origPosY);
+		if (this.checkEmptyScreen()) {
+			this.randomTarget();
 		} else {
-			let posArrayX = [];
+			let posInfoArray = [];
 			for (let i=0; i<alienSquadrons.length; i++) {
 				for (let j=0; j<alienSquadrons[i].aliens.length; j++) {
-					posArrayX.push(alienSquadrons[i].aliens[j].pos.x);
+					let posInfo = {
+						posX: alienSquadrons[i].aliens[j].pos.x,
+						posY: alienSquadrons[i].aliens[j].pos.y
+					};
+					posInfoArray.push(posInfo);
 				}
 			}
-			posArrayX.sort();
-			//console.log(posArrayX.length + " " + posArrayX);
+			posInfoArray.sort((a, b) => b.posY - a.posY);
+			//console.log(posInfoArray.length + " " + posInfoArray);
 
-			this.target = createVector(posArrayX[posArrayX.length -1], this.origPosY);
+			this.target = createVector(posInfoArray[posInfoArray.length-1].posX, this.origPosY);
 		}
+	}
+
+	randomTarget() {
+		this.target = createVector(random(-this.w, this.w), this.origPosY);
+	}
+
+	checkEmptyScreen() {
+		for (let i=0; i<alienSquadrons.length; i++) {
+			if (alienSquadrons[i].aliens.length != 0) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	fireBullet() {

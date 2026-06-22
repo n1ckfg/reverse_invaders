@@ -25,6 +25,9 @@ let moveRight = false;
 let moveUp = false;
 let moveDown = false;
 
+let enemyFireChance = 0.1;
+let enemyFireChanceDelta = 0.05;
+
 function preload() {
     //shader = loadShader('shaders/basic.vert', 'shaders/effect.frag');
 }
@@ -117,7 +120,10 @@ function draw() {
     }
 
     for (let i=0; i<enemies.length; i++) {
-        if (!enemies[i].alive) enemies.splice(i, 1);
+        if (!enemies[i].alive) {
+            enemies.splice(i, 1);
+            enemyFireChance += enemyFireChanceDelta;
+        }
     }
 
     for (let i=0; i<alienBullets.length; i++) {
